@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="success-btn">Test successfull</button>
+    <button id="failed-btn">Test unsuccessfull</button>
+    <button id="final-btn">Test unsuccessfull</button>
+
+    <h1 id="result">Result</h1>
+
+    <script>
+      let result = document.querySelector("#result");
+
+      document.querySelector("#final-btn").addEventListener("click", () => {
+        console.log("Fired");
+      });
+
+      async function makeRequest(url) {
+        result.textContent = "Loading....";
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          result.textContent = `Success ${JSON.stringify(data)}`;
+        } catch (error) {
+          result.textContent = error.message;
+        }
+      }
+
+      document.querySelector("#success-btn").addEventListener("click", () => {
+        // console.log("success");
+        makeRequest("http://localhost:3000");
+      });
+
+      document.querySelector("#failed-btn").addEventListener("click", () => {
+        console.log("Failed");
+
+        // makeRequest("http://localhost:3001");
+      });
+    </script>
+  </body>
+</html>
